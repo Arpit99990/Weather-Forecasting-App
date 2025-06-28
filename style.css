@@ -77,6 +77,7 @@ body{
     background: rgba(153, 205, 50, 0.778);
     padding: 2px 20px;
     border-radius: 15px;
+    text-transform: capitalize;
 }
 main{
     display: grid;
@@ -127,4 +128,5 @@ main{
 }
 .desc{
     color: rgb(196, 255, 77);
+    text-transform: capitalize;
 }
