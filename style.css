@@ -125,8 +125,9 @@ main{
 }
 .time,.date{
     color: rgb(254, 189, 132);
+    font-weight: 600;
 }
-.desc{
+.desc,.description{
     color: rgb(196, 255, 77);
     text-transform: capitalize;
 }
