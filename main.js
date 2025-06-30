@@ -8,7 +8,7 @@ window.addEventListener("load",()=>{
         getCurrentPosition((position)=>{
             let lon = position.coords.longitude;
             let lan = position.coords.latitude;
-             const url=`http://api.openweathermap.org/data/2.5/weather?q=delhi&appid=${apikey}`;
+            const url= `http://api.openweathermap.org/data/2.5/weather?lat=${lat}&` + `lon=${lon}&appid=${apikey}`;
 
              fetch(url).then(res=>{
                 return res.json()
@@ -19,6 +19,19 @@ window.addEventListener("load",()=>{
         })
     }
 })
+
+function searchByCity(){
+    var place= document.getElementById('input').value;
+    var urlsearch= `http://api.openweathermap.org/data/2.5/weather?q=${place}&` + `appid=${apikey}`;
+
+    fetch(urlsearch).then((res)=>{
+        return res.json();
+    }).then((data)=>{
+        console.log(data);
+        weatherReport(data);
+    })
+    document.getElementById('input').value='';
+}
 
 function weatherReport(data){
     var urlcast=`http://api.openweathermap.org/data/2.5/forecast?q=${data.name}&appid=${apikey}`;
@@ -79,5 +92,31 @@ function hourForecast(forecast){
     }
 }
 function dayForecast(forecast){
+    document.querySelector('weekF').
+    innerHTML='';
 
+    for(int =8;i<forecast.list.length;i+=8){
+        console.log(forecast.list[i]);
+        
+        let div=document.createElement('div');
+        div.setAttribute('class','dayF');
+
+        let day=document.createElement('p');
+        day.setAttribute('class','date');
+        day.innerText=new Date(forecast.list[i].dt*1000).
+        toLocaleDateString(undefined,'Asia/Kolkata');
+        div.appendChild(day);
+
+        let temp=document.createElement('p');
+        temp.innerText=Math.floor(forecast.list[i].main.temp_max -273)+' °C'
+        +'/'+Math.floor(forecast.list[i].main.temp_min -273)+' °C';
+        div.appendChild(temp);
+
+        let description= document.createElement('p');
+        description.setAttribute('class','desc')
+        description.innerText= forecast.list[i].weather[0].description;
+        div.appendChild(description);
+
+        document.querySelector('.weekF').appendChild(div)
+    }
 }
